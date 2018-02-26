@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const express = require('express');
 const Schema = mongoose.Schema;
+const app = express();
+const PORT = process.env.PORT || 5000;
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://Artur:123test@ds249128.mlab.com:49128/heroku-app', {
-    useMongoClient: true
-});
+mongoose.connect('mongodb://Artur:123test@ds249128.mlab.com:49128/heroku-app');
 
 //new user Schema
 const userSchema = new Schema({
@@ -153,4 +154,10 @@ Promise.all([kenny.save(), mark.save(), benny.save()])
     .then(findMarkAndDelete)
     .then(findKennyAndDelete)
     .then(findBennyAndRemove)
-    .catch(console.log.bind(console))
+    .catch(console.log.bind(console));
+
+
+// Response
+app.get('/', (req, res) => res.send('hello heroku'));
+
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
